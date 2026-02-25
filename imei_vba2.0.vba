@@ -1,5 +1,4 @@
 Private Sub Worksheet_Change(ByVal Target As Range)
-    ' 1. Verifica se a mudança foi na célula B2
     If Not Intersect(Target, Range("B2")) Is Nothing And Range("B2").Value <> "" Then
         
         ' Limpa o status visual anterior para uma nova leitura
@@ -25,10 +24,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             
             Application.EnableEvents = False
             
-            ' Encontra a próxima linha no histórico
             proximaLinha = wsHist.Cells(wsHist.Rows.Count, "A").End(xlUp).Row + 1
-            
-            ' Salva no histórico
+
             wsHist.Cells(proximaLinha, 1).Value = Range("E2").Value
             wsHist.Cells(proximaLinha, 2).Value = Now
             
@@ -38,12 +35,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             ' --- FEEDBACK VISUAL ---
             With Range("F2")
                 .Value = "COPIADO!"
-                .Interior.Color = RGB(0, 255, 0) ' Verde brilhante
-                .Font.Color = RGB(0, 0, 0)       ' Texto preto
+                .Interior.Color = RGB(0, 255, 0) 
+                .Font.Color = RGB(0, 0, 0)     
                 .Font.Bold = True
             End With
             
-            ' Salva o arquivo
             ThisWorkbook.Save 
             
             Application.EnableEvents = True
@@ -52,8 +48,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             ' Caso os IMEIs sejam diferentes, mostra um erro visual em vez de nada
             With Range("F2")
                 .Value = "DIVERGENTE!"
-                .Interior.Color = RGB(255, 0, 0) ' Vermelho
-                .Font.Color = RGB(255, 255, 255) ' Texto branco
+                .Interior.Color = RGB(255, 0, 0) 
+                .Font.Color = RGB(255, 255, 255) 
                 .Font.Bold = True
             End With
         End If
